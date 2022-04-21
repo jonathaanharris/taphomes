@@ -15,7 +15,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.post('/api/users', async (req, res, next) => {
+app.post('/api/users', async (req, res) => {
   try {
     const { email, password, first_name, last_name, role } = req.body
     const user = await User.findOne({ where: { email } })
@@ -45,7 +45,7 @@ app.post('/api/users', async (req, res, next) => {
   }
 })
 
-app.get('/api/users', authentication, async (req, res, next) => {
+app.get('/api/users', authentication, async (req, res) => {
   try {
     const user = await User.findAll()
     let data = []
@@ -58,7 +58,7 @@ app.get('/api/users', authentication, async (req, res, next) => {
   }
 })
 
-app.get('/api/users/current', authentication, async (req, res, next) => {
+app.get('/api/users/current', authentication, async (req, res) => {
   try {
     const UserId = req.loginUser.id
     const user = await User.findByPk(UserId)
@@ -76,7 +76,7 @@ app.get('/api/users/current', authentication, async (req, res, next) => {
   }
 })
 
-app.get('/api/users/:id', authentication, async (req, res, next) => {
+app.get('/api/users/:id', authentication, async (req, res) => {
   try {
     const { id } = req.params
     const user = await User.findByPk(id)
